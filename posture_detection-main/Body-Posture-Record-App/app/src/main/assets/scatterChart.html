@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Scatter Plot</title>
+</head>
+<body>
+<canvas id="scatterChart" width="400" height="200"></canvas>
+<script>
+    const ctx = document.getElementById('scatterChart').getContext('2d');
+
+    // Initialize the scatter plot
+    const scatterChart = new Chart(ctx, {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'Posture Status Over Time',
+                data: [], // {x: time, y: status}
+                backgroundColor: 'rgba(75, 192, 192, 0.6)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    type: 'category', // Use category for times
+                    title: {
+                        display: true,
+                        text: 'Time'
+                    },
+                    labels: [] // Set labels dynamically
+                },
+                y: {
+                    type: 'category', // Use category for statuses
+                    labels: ['Bad', 'Good'], // Status labels
+                    title: {
+                        display: true,
+                        text: 'Posture Status'
+                    }
+                }
+            }
+        }
+    });
+
+    // Function to format the time
+    function formatTime(time) {
+        const date = new Date(time); // Convert time string to Date object
+        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        return date.toLocaleString('en-US', options); // Return formatted time
+    }
+
+    // Function to update the chart dynamically
+    function updateChart(dataPoints) {
+        // Format the times before updating the chart
+        const formattedData = dataPoints.map((point, index) => {
+            return {
+                x: formatTime(point.x), // Format the x-axis time value
+                y: point.y // Status value remains the same
+            };
+        });
+
+        // Update the chart data and labels
+        scatterChart.data.datasets[0].data = formattedData; // Add formatted data points
+        scatterChart.data.labels = formattedData.map(point => point.x); // Set the formatted time labels
+        scatterChart.update(); // Render the updated chart
+    }
+
+</script>
+</body>
+</html>

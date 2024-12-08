@@ -1,0 +1,43 @@
+pyinstaller --onefile --hidden-import=tkinter --hidden-import=PIL --hidden-import=pyrebase --hidden-import=cv2 \
+--add-data "/home/srujan/Downloads/posture_detection/myenv/lib/python3.10/site-packages/mediapipe/modules/pose_landmark/pose_landmark_cpu.binarypb:mediapipe/modules/pose_landmark" \
+main.py
+
+
+
+pip install --upgrade Pillow
+sudo apt-get install python3-tk
+
+
+V2
+pyinstaller --onefile --hidden-import=tkinter --hidden-import=Pillow._tkinter_finder --hidden-import=tkinter._fix --hidden-import=tkinter._fiximport \
+--hidden-import=pyrebase --hidden-import=cv2 \
+--add-data "/home/srujan/Downloads/posture_detection/myenv/lib/python3.10/site-packages/mediapipe/modules/pose_landmark/pose_landmark_cpu.binarypb:mediapipe/modules/pose_landmark" \
+--add-data "/home/srujan/Downloads/posture_detection/myenv/lib/python3.10/site-packages/mediapipe/modules/pose_landmark/pose_landmark_full.tflite:mediapipe/modules/pose_landmark" \
+--add-data "/home/srujan/Downloads/posture_detection/myenv/lib/python3.10/site-packages/mediapipe/modules/pose_detection/pose_detection.tflite:mediapipe/modules/pose_detection" \
+main.py
+
+
+
+pyinstaller --onefile --hidden-import=tkinter --hidden-import=Pillow._tkinter_finder --hidden-import=tkinter._fix --hidden-import=tkinter._fiximport \
+--additional-hooks-dir=. \
+--add-data "/home/srujan/Downloads/posture_detection/myenv/lib/python3.10/site-packages/mediapipe/modules/pose_landmark/pose_landmark_cpu.binarypb:mediapipe/modules/pose_landmark" \
+--add-data "/home/srujan/Downloads/posture_detection/myenv/lib/python3.10/site-packages/mediapipe/modules/pose_landmark/pose_landmark_full.tflite:mediapipe/modules/pose_landmark" \
+--add-data "/home/srujan/Downloads/posture_detection/myenv/lib/python3.10/site-packages/mediapipe/modules/pose_detection/pose_detection.tflite:mediapipe/modules/pose_detection" \
+main.py
+
+
+
+
+<--------------------------------------------->
+import os
+import mediapipe
+
+mediapipe_root = os.path.dirname(mediapipe.__file__)
+pose_landmark_cpu = os.path.join(mediapipe_root, 'modules', 'pose_landmark', 'pose_landmark_cpu.binarypb')
+pose_landmark_full = os.path.join(mediapipe_root, 'modules', 'pose_landmark', 'pose_landmark_full.tflite')
+pose_detection = os.path.join(mediapipe_root, 'modules', 'pose_detection', 'pose_detection.tflite')
+
+print(pose_landmark_cpu)
+print(pose_landmark_full)
+print(pose_detection)
+<------------------------------------------------>
